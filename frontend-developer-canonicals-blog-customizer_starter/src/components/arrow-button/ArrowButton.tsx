@@ -1,25 +1,34 @@
-import { useState } from 'react';
-import clsx from 'clsx';
 import arrow from 'src/images/arrow.svg';
-
 import styles from './ArrowButton.module.scss';
+import clsx from 'clsx';
 
 /** Функция для обработки открытия/закрытия формы */
 export type OnClick = () => void;
 
-export const ArrowButton = () => {
+interface PropsArrowButton {
+	toggleOpenFn: OnClick;
+	openState: boolean;
+}
+
+export const ArrowButton = ({ toggleOpenFn, openState }: PropsArrowButton) => {
 	return (
 		/* Не забываем указаывать role и aria-label атрибуты для интерактивных элементов */
 		<div
 			role='button'
 			aria-label='Открыть/Закрыть форму параметров статьи'
 			tabIndex={0}
-			className={styles.container}
-		>
+			onClick={toggleOpenFn}
+			className={clsx({
+				[styles.container]: true,
+				[styles.container_open]: openState,
+			})}>
 			<img
 				src={arrow}
 				alt='иконка стрелочки'
-				className={styles.arrow}
+				className={clsx({
+					[styles.arrow]: true,
+					[styles.arrow_open]: openState,
+				})}
 			/>
 		</div>
 	);
